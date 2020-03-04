@@ -1,0 +1,2 @@
+compile in this way:
+g++ test.cpp
