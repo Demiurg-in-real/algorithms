@@ -13,13 +13,14 @@ template<typename kek> void role<kek>::reset(unsigned long posit){
 		reset(b);
 	}
 }
-template<typename kek> void role<kek>::erase(unsigned long posit){
+template<typename kek> kek role<kek>::erase(unsigned long posit){
+	kek hek=mass[posit];
 	mass[posit] = mass[mass.size()-1];
 	reset(posit);
 	mass.resize(mass.size()-1);
+	return hek;
 }
 template<typename kek> void role<kek>::push(kek elem){
-	for(unsigned long i=0; i<mass.size();i++) if(mass.at(i) == elem) return;
 	mass.push_back(elem);
 	kek swap;
 	for(unsigned long position = (mass.size()-1), i=((position-1)/2); position!=0;position=i, i=((i-1)/2)){
@@ -41,3 +42,4 @@ template<typename kek> void role<kek>::print(){
 	}
 	cout<<std::endl;
 }
+template<typename kek> kek role<kek>::pop(){ return erase(0);}
