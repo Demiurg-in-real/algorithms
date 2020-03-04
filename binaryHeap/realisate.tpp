@@ -9,9 +9,7 @@ template<typename kek> void role<kek>::reset(unsigned long posit){
 	if( l < mass.size() && mass[l] > mass[b]) b = l;
 	if( r < mass.size() && mass[r] > mass[b]) b = r;
 	if( b != posit){
-		swap = mass[posit];
-		mass[posit] = mass[b];
-		mass[b] = swap;
+		std::swap(mass[posit], mass[b]);
 		reset(b);
 	}
 }
@@ -26,9 +24,7 @@ template<typename kek> void role<kek>::push(kek elem){
 	kek swap;
 	for(unsigned long position = (mass.size()-1), i=((position-1)/2); position!=0;position=i, i=((i-1)/2)){
 		if(mass[i] < mass[position]){
-			swap=mass[i];
-			mass[i]=mass[position];
-			mass[position]=swap;
+			std::swap(mass[i], mass[position]);
 		}
 		else break;
 	}
