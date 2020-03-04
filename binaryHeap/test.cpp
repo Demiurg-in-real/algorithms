@@ -14,7 +14,7 @@ int main(){
 	cout<<std::endl;
 	close(k);
 	lol.print();
-	lol.erase(0);
+	printf("%i - max\n", lol.pop());
 	lol.print();
 	return 0;
 }
