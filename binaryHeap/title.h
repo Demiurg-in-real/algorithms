@@ -13,16 +13,15 @@ using std::cout;
 template <typename kek> class role{
 	private:
 		vector<kek> mass;
-		unsigned long numer = 0;
-		int levels=0;
+		void reset(unsigned long posit);
+		kek erase (unsigned long posit);
 	public:
 		void print();
 		bool empty();
 		uint64_t siz();
 		kek max();
-		void reset(unsigned long posit);
 		void push(kek elem);
-		void erase(unsigned long posit);
+		kek pop();
 };
 #include "realisate.tpp"
 #endif
