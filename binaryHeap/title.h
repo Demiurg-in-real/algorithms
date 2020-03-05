@@ -19,7 +19,7 @@ template <typename kek, typename rer = std::vector<kek>> class role{
 		void print();
 		bool empty();
 		uint64_t siz();
-		kek max();
+		const kek& max();
 		void push(kek elem);
 		kek pop();
 };

@@ -1,6 +1,6 @@
 template<typename kek, typename rer> bool role<kek,rer>::empty(){ return mass.empty();}
 template<typename kek, typename rer> uint64_t role<kek,rer>::siz(){ return mass.size();}
-template<typename kek, typename rer> kek role<kek,rer>::max(){ if(mass.empty() == false) return mass.at(0);}
+template<typename kek, typename rer> const kek& role<kek,rer>::max(){ if(mass.empty() != true) return mass.at(0);}
 template<typename kek, typename rer> void role<kek,rer>::reset(unsigned long posit){
 	unsigned long l = 2*posit+1;
 	unsigned long r = 2*posit+2;
