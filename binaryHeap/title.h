@@ -10,9 +10,9 @@
 #include<cmath>
 using std::vector;
 using std::cout;
-template <typename kek> class role{
+template <typename kek, typename rer = std::vector<kek>> class role{
 	private:
-		vector<kek> mass;
+		rer mass;
 		void reset(unsigned long posit);
 		kek erase (unsigned long posit);
 	public:

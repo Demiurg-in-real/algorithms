@@ -1,7 +1,7 @@
-template<typename kek> bool role<kek>::empty(){ return mass.empty();}
-template<typename kek> uint64_t role<kek>::siz(){ return mass.size();}
-template<typename kek> kek role<kek>::max(){ if(mass.empty() == false) return mass.at(0);}
-template<typename kek> void role<kek>::reset(unsigned long posit){
+template<typename kek, typename rer> bool role<kek,rer>::empty(){ return mass.empty();}
+template<typename kek, typename rer> uint64_t role<kek,rer>::siz(){ return mass.size();}
+template<typename kek, typename rer> kek role<kek,rer>::max(){ if(mass.empty() == false) return mass.at(0);}
+template<typename kek, typename rer> void role<kek,rer>::reset(unsigned long posit){
 	unsigned long l = 2*posit+1;
 	unsigned long r = 2*posit+2;
 	unsigned long b = posit;
@@ -13,14 +13,14 @@ template<typename kek> void role<kek>::reset(unsigned long posit){
 		reset(b);
 	}
 }
-template<typename kek> kek role<kek>::erase(unsigned long posit){
+template<typename kek, typename rer> kek role<kek,rer>::erase(unsigned long posit){
 	kek hek=mass[posit];
 	mass[posit] = mass[mass.size()-1];
 	reset(posit);
 	mass.resize(mass.size()-1);
 	return hek;
 }
-template<typename kek> void role<kek>::push(kek elem){
+template<typename kek, typename rer> void role<kek,rer>::push(kek elem){
 	mass.push_back(elem);
 	kek swap;
 	for(unsigned long position = (mass.size()-1), i=((position-1)/2); position!=0;position=i, i=((i-1)/2)){
@@ -30,7 +30,7 @@ template<typename kek> void role<kek>::push(kek elem){
 		else break;
 	}
 }
-template<typename kek> void role<kek>::print(){
+template<typename kek, typename rer> void role<kek,rer>::print(){
 	unsigned long level=0;
 	cout<<std::endl<<std::endl;
 	for(unsigned long i = 0; i<mass.size();i++){
@@ -42,4 +42,4 @@ template<typename kek> void role<kek>::print(){
 	}
 	cout<<std::endl;
 }
-template<typename kek> kek role<kek>::pop(){ return erase(0);}
+template<typename kek, typename rer> kek role<kek,rer>::pop(){ return erase(0);}
