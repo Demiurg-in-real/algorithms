@@ -19,69 +19,38 @@ template <class K, class V, typename M = AVLtree::Node<K,V>> class tree{
 		bool is_empty();
 		int high(M* ob);
 		int bf(M* ob);
-void printi(M* treee, const int level);
+		void printi(M* treee, const int level);
 	public:
 		bool insert(K key, V value);
 		void delete_item(K key, V value);
-		void print();
 		tree(K key, V value);
 		tree(M &ob);
 		void print(int i);
 };
 template <class K, class V, typename M> tree<K,V,M>::tree(K key, V value){
-	root = new M(key, value);
-}
+	root = new M(key, value);}
 template <class K, class V, typename M> M* tree<K,V,M>::search(M* ob, K key, V value){
-	if(ob == nullptr) {
-//		cout<<"Didnt find\n";
-		return nullptr;
-	}
-	if(ob->value == value && ob->key == key) {
-//		cout<<"Find\n";
-		return ob;
-	}
+	if(ob == nullptr) return nullptr;
+	if(ob->value == value && ob->key == key) return ob;
 	else{
-		if(ob->key > key)  {
-//			cout<<"less\n";
-			return search(ob->right,key,value);
-		}
-		if(ob->key < key)  {
-//			cout<<"More\n";
-			return search(ob->left,key,value);
-		}
+		if(ob->key > key)return search(ob->right,key,value);
+		if(ob->key < key)return search(ob->left,key,value);
 	}
 }
 template <class K, class V, typename M> M* tree<K,V,M>::insert(M* ob, K key, V value){
-	if(ob==nullptr) {
-		cout<<"New\n";
-		return new M(key, value);
-	}
-	if(key>ob->key)	{
-		cout<<"Go to right\n";
-		ob->right = insert(ob->right,key,value);
-	}
+	if(ob==nullptr) return new M(key, value);
+	if(key>ob->key)	ob->right = insert(ob->right,key,value);
 	else{
-		if(key<ob->key)	{
-			cout<<"Go to left\n";
-			ob->left = insert(ob->left,key,value);
-		}
+		if(key<ob->key)	ob->left = insert(ob->left,key,value);
 		else{
-			cout<<"Change value\n";
-			if(ob->key == key){
-				ob->value = value;
-				return ob;
-			}
+			if(ob->key == key) ob->value = value;
 		}
 	}
 	return balance(ob);
 }
-template <class K, class V, typename M> int tree<K,V,M>::high(M* ob){
-	return ob!=nullptr?ob->height:0;
-}
-template <class K, class V, typename M> void tree<K,V,M>::elevation(M* ob){
-	if(high(ob->left) != high(ob->right)) ob->height += (high(ob->left)>high(ob->right)?high(ob->left):high(ob->right));
-}
-template <class K, class V, typename M> int tree<K,V,M>::bf(M* ob){ 
+template <class K, class V, typename M> int tree<K,V,M>::high(M* ob){return ob!=nullptr?ob->height:0;}
+template <class K, class V, typename M> void tree<K,V,M>::elevation(M* ob){ ob->height =1 + (high(ob->left)>high(ob->right)?high(ob->left):high(ob->right));}
+template <class K, class V, typename M> int tree<K,V,M>::bf(M* ob){
 	ob->balance = high(ob->left) - high(ob->right);
 	return ob->balance;
 }
@@ -97,20 +66,19 @@ template <class K, class V, typename M> M* tree<K,V,M>::rotleft(M* ob){
 	M* swap = ob->right;
 	ob->right = swap->left;
 	swap->left = ob;
-	elevation(swap->right);
+	elevation(swap->left);
 	elevation(swap);
 	return swap;
 }
 template <class K, class V, typename M> M* tree<K,V,M>::balance(M* ob){
 	elevation(ob);
+	cout<<"Key "<<ob->key<<" height is "<<ob->height<<endl;
 	if(bf(ob) == 2){
-		cout<<"Rebalance r\nKey - "<<ob->key<<endl;
 		if(bf(ob->left) < 0) ob->left = rotleft(ob->left);
 		return rotright(ob);
 	}
 	if(bf(ob) == -2){
-		cout<<"Rebalance l\nKey - "<<ob->key<<endl;
-		if(bf(ob->right) > 0) ob->right = rotright(ob->right);
+		if(bf(ob->right) > 0)ob->right = rotright(ob->right);
 		return rotleft(ob);
 	}
 	return ob;
@@ -136,40 +104,32 @@ template <class K, class V, typename M> M* tree<K,V,M>::finlef(M* ob){
 	if(ob->left->left == nullptr) return ob;
 	return finlef(ob->left);
 }
-
 //--------------------------------------------
 template <class K, class V, typename M> M* tree<K,V,M>::delete_item(M* ob, K key, V value){
 	if(key>ob->key)ob->right = delete_item(ob->right, key,value);
 	else{
-		if(key<ob->left) ob->left = delete_item(ob->left,key,value);
+		if(key<ob->key) ob->left = delete_item(ob->left,key,value);
 		else{
 			if(key != ob->key) {
 				df = true;
 				return ob;
 			}
-			M* res;
-			if(ob->left == nullptr && ob->right == nullptr) return delete ob;
-			if(ob->left == nullptr || ob->right == nullptr){
-//				M* res;
-				if(ob->left == nullptr) res = ob->right;
-				if(ob->right == nullptr) res = ob->left;
-//				delete ob;
-//				return res;
+			if(ob->left == nullptr && ob->right == nullptr) {
+				delete ob;
+				return nullptr;
 			}
+			M* res;
+			if(ob->right == nullptr)res = ob->left;
 			else{
-//				M* res;
 				if(ob->right->left == nullptr){
 					res = ob->right;
-//					delete ob;
-//					return res;
+					res->left=ob->left;
 				}
 				else{
 					M* rese = finlef(ob->right);
-					M kek(rese->left->key,rese->left->value);
-					res = &kek;
+					res = new M(rese->left->key,rese->left->value);
 					res->left = ob->left;
-					res->right = ob->right;
-					rese->left->left = delete_item(rese, kek.key, kek.value);
+					res->right = delete_item(ob->right, res->key, res->value);
 				}
 			}
 			delete ob;
@@ -178,28 +138,12 @@ template <class K, class V, typename M> M* tree<K,V,M>::delete_item(M* ob, K key
 	}
 	return balance(ob);
 }
-template <class K, class V, typename M> void tree<K,V,M>::print(){
-	queue<M*> que;
-	M* x;
-	que.push(root);
-	while(!que.empty()){
-		x = que.front();
-		que.pop();
-//		printf("%p - adress\n", x);
-		for(int i = 0; i<x->height; i++)printf(" ");
-		if(x == nullptr) printf("\tN");
-		else printf("\t%i", x->key);
-		if(x->left != nullptr) que.push(x->left);
-		if(x->right != nullptr) que.push(x->right);
-	}
-}
-
-template<class K, class V, typename M>void tree<K,V,M>::printi(M *treee, const int level)
+template<class K, class V, typename M>void tree<K,V,M>::printi(M *treee, int level)
 {      
-    if (treee->left) printi(treee->left, level + 1);
+    if (treee->right) printi(treee->right, level + 1);
     for (int i = 0; i < level; i++) std::cout << " ";
     std::cout << treee->key << std::endl;
-    if (treee->right) printi(treee->right, level + 1);
+    if (treee->left) printi(treee->left, level + 1);
 }
 template<class K, class V, typename M> void tree<K,V,M>::print(int i){
 	printi(root,0);
@@ -210,7 +154,7 @@ template <class K, class V, typename M> bool tree<K,V,M>::insert(K key, V value)
 	if(search(root, key,value) != nullptr) return false;
 	root = insert(root, key,value);
 	print(0);
-	cout<<"\n\n\n";
+	cout<<"---------------------------"<<endl;
 	return true;
 }
 template <class K, class V, typename M> void tree<K,V,M>::delete_item(K key, V value){
@@ -220,16 +164,24 @@ template <class K, class V, typename M> void tree<K,V,M>::delete_item(K key, V v
 		df = false;
 	}
 	else std::cout<<"Success."<<std::endl;
+	print(0);
 }
 int main(){
 	AVLtree::Node<int,int> kek(1,11);
 	AVLtree::Node<int,int> kuk = kek;
-	printf("%p - test real\n%p - test copied", &kek,&kuk);
-	tree<int,int> lol(1,5);
+//	printf("%p - test real\n%p - test copied", &kek,&kuk);
+	tree<int,int> lol(9,5);
 	lol.insert(2,6);
 	lol.insert(7,3);
 	lol.insert(8,1);
-	lol.insert(10,4);
-//	lol.print();
+	lol.insert(4,4);
+	lol.insert(1,4);
+	lol.insert(10,12);
+	lol.insert(12,12);
+	lol.insert(11,1);
+	lol.delete_item(9,5);
+	lol.delete_item(12,12);
+	lol.delete_item(11,1);
+	lol.delete_item(10,12);
 	return 0;
 }
