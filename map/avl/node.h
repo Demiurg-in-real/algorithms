@@ -9,8 +9,6 @@ namespace AVLtree{
 			K key;
 			T value;
 			unsigned int height;
-			int8_t balance;
-			Node* root;
 			Node* left;
 			Node* right;
 			Node(K k, T v);
