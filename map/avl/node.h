@@ -13,6 +13,7 @@ namespace AVLtree{
 			Node* right;
 			Node(K k, T v);
 			Node(const Node &old);
+			~Node();
 	};
 	#include "node.tpp"
 }

@@ -12,3 +12,7 @@ template <class K, class T> Node<K,T>::Node(const Node &old){
 	this->left = old.left;
 	this->right = old.right;
 }
+template <class K, class T> Node<K,T>::~Node(){
+	left = nullptr;
+	right = nullptr;
+}
