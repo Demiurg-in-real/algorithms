@@ -5,7 +5,9 @@ tree<K,V,M>::tree(K key, V value){
 
 template<class K, class V, typename M> 
 tree<K,V>& tree<K,V,M>::operator=(const tree<K,V>& rete){ 
-	return tree(rete);
+	clear_all();
+	this->root = cop_tree(rete.root);
+	return *this;
 }
 
 template<class K, class V, typename M> 
@@ -34,36 +36,34 @@ M* tree<K,V,M>::finlef(M* ob){
 }
 
 template<class K, class V, typename M> 
-void tree<K,V,M>::print(){printi(root,0);
+void tree<K,V,M>::print(){
+	if(!(is_empty())) printi(root,0);
+	else std::cout<<"Tree is empty"<<std::endl;
 }
 
-template<class K, class V, typename M> V tree<K,V,M>::operator[](K key){ 
+template<class K, class V, typename M> 
+V tree<K,V,M>::operator[](K key){ 
 	M* kr = search(root,key);
 	if(kr != nullptr) return kr->value;
-//	return NULL;
+//	exit(-1);
 }
 
 template<class K, class V, typename M> 
 tree<K,V,M>::tree(const tree<K,V> &sec){
-	std::queue<M*> que;
-	this->root= new M(sec.root->key, sec.root->value);
-	if(sec.root->left != nullptr)que.push(sec.root->left);
-	if(sec.root->right != nullptr) que.push(sec.root->right);
-	M* x;
-	while(!que.empty()){
-		x = que.front();
-		this->root = insert(this->root,x->key,x->value);
-		que.pop();
-		if(x->left != nullptr) que.push(x->left);
-		if(x->right != nullptr) que.push(x->right);
-	}
+	this->root = cop_tree(sec.root);
+}
+template<class K, class V, typename M>
+M* tree<K,V,M>::cop_tree(M* nod){
+	if (nod == nullptr) return nullptr;
+	M* newnod = new M(nod->key, nod->value);
+	newnod->left = cop_tree(nod->left);
+	newnod->right = cop_tree(nod->right);
+	return newnod;
 }
 
 template<class K, class V, typename M> 
 tree<K,V,M>::~tree(){
-	while(!is_empty()){
-		root = delete_item (root, root->key);
-	}
+	clear_all();
 }
 
 template <class K, class V, typename M> 
@@ -151,6 +151,54 @@ M* tree<K,V,M>::delete_item(M* ob, K key){
 }
 
 template<class K, class V, typename M>
+bool tree<K,V,M>::check_rules(M* nod){
+	int8_t balfac;
+	std::stack<M*> kek;
+	M* lvn = nullptr;
+	while( (!kek.empty()) || nod != nullptr){
+		if (nod != nullptr){
+			kek.push(nod);
+			nod = nod->left;
+		}
+		else{
+			M* peknod = kek.top();
+			if(peknod->right != nullptr && lvn != peknod->right){
+				nod = peknod->right;
+			}
+			else{
+				balfac = bf(peknod);
+				if( (balfac>2 || balfac<(-2))) return true;
+				lvn = kek.top();
+				kek.pop();
+			}
+		}
+	}
+	return false;
+}
+
+template<class K, class V, typename M>
+void tree<K,V,M>::clear_all(){
+	std::stack<M*> kekov;
+	M* lvn = nullptr;
+	M* peknod = nullptr;
+	while( (!kekov.empty()) || root != nullptr){
+		if(root!=nullptr){
+			kekov.push(root);
+			root = root->left;
+		}
+		else{
+			peknod = kekov.top();
+			if(peknod->right != nullptr && lvn != peknod->right) root = peknod->right;
+			else{
+				delete peknod;
+				lvn = kekov.top();
+				kekov.pop();
+			}
+		}
+	}
+}
+
+template<class K, class V, typename M>
 void tree<K,V,M>::printi(M *treee, int level){      
     if (treee->right) printi(treee->right, level + 1);
     for (int i = 0; i < level; i++) std::cout << "-";
@@ -161,6 +209,7 @@ void tree<K,V,M>::printi(M *treee, int level){
 template <class K, class V, typename M> 
 void tree<K,V,M>::insert(K key, V value){
 	root = insert(root, key,value);
+//	if(check_rules(root)) std::cout<<"Some troubles with tree\n";
 }
 
 template <class K, class V, typename M> 

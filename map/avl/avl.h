@@ -2,7 +2,11 @@
 #define AVL
 #include<queue>
 #include<iostream>
+#include<stack>
+#include<cstdint>
+#include<vector>
 #include "node.h"
+//#include "definit.h"
 namespace AVL{
 	template <class K, class V, typename M = AVLtree::Node<K,V>> class tree{
 		private:
@@ -21,7 +25,10 @@ namespace AVL{
 			bool is_empty();
 			int bf(M* ob);
 			void printi(M* treee, const int level);
+			bool check_rules(M* nod);
+			M* cop_tree(M* nod);
 		public:
+			void clear_all();
 			void insert(K key, V value);
 			tree<K,V>& operator=(const tree<K,V>& rete);
 			V operator[](K key);
@@ -30,7 +37,15 @@ namespace AVL{
 			tree(const tree<K,V> &sec);
 			~tree();
 			void print();
+//			iterat<K,V>& begin(){
+//				return iterat<K,V>(root,0);
+//			}
+//			iterat<K,V>& end(){
+//				return iterat<K,V>(root,1);
+//			}
+
 	};
+//	#include "iterat.h"
 	#include "avl.tpp"
 }
 #endif
