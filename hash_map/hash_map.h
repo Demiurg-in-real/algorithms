@@ -15,7 +15,6 @@ namespace part_tree{
 				C = 2.0;
 			};
 			bool insert(K k, V v);
-			hash_map<K,V> operator=(const hash_map<K,V>& cop);
 			V& operator[](K k);
 			bool delet(K k);
 			const size_t size();

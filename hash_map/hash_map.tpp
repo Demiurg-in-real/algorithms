@@ -64,12 +64,6 @@ bool hash_map<K,V,M,W>::insert(K k, V v){
 }
 
 template<typename K, typename V, typename M, typename W> 
-hash_map<K,V> hash_map<K,V,M,W>::operator=(const hash_map<K,V>& cop){
-	this->kek = cop.kek;
-	return *this;
-}
-
-template<typename K, typename V, typename M, typename W> 
 V& hash_map<K,V,M,W>::operator[](K k){
 	W i = 0;
 	hash(i,k);
