@@ -7,33 +7,25 @@ namespace part_tree{
 			bool free;
 			K key;
 			V value;
-			base(K k, V v){ key = k; value = v;}
+			base(K k, V v){ free = false; key = k; value = v;}
 			base(){
 				free=true;
 				key = K();
 				value = V();
 			};
-			void insert(K k, V v){
-				key = k;
-				value = v;
-				free = false;
-			}
-			void delet(){ free=true;};
 	};
 	template<typename K, typename V, typename obj = base<K,V>> class serie{
 		public:
 			serie();
-			bool insert(K k, V v);
-			bool delet(K k);
-			const V& get(K k);
-			short search(K k);
+			int search(K k);
+			bool empt;
+			unsigned int size;
 			bool empty();
-			obj& operator[](int i);
+			obj& operator[](unsigned long long k);
 			size_t siz(){return kek.size();}
+			void resiz();
 		private:
 			std::vector<obj> kek;
-			short size;
-			bool empt;
 	};
 	#include "ser.tpp"
 }
