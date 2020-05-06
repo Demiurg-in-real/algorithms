@@ -117,7 +117,7 @@ template <typename T, typename V, typename S> void btree<T,V,S>::uniq(S* prelast
 		if(prelast->child[pos1-1]->size > t-1){
 			traversal_left(prelast,last,pos1);
 		}
-		else merge(prelast->child[pos1 - 1], prelast, &tim/*(*pos-1)*/);
+		else merge(prelast->child[pos1 - 1], prelast, tim);
 	}
 	else{
 		if(pos1 == 0){
@@ -162,7 +162,7 @@ template<typename T, typename V, typename S>bool btree<T,V,S>::delete_item(S* r,
 	if(search(r, k,pl,l,p1,p2)) return false;
 	else{
 		if(l->leaf) {
-			delete l->item[p2];
+			delete l->items[p2];
 			l->size--;
 			for(short i = p2; i<l->size-1; i++) l->items[i] = l->items[i+1];//может быть косяк
 			l->items[l->size - 1] = nullptr;
@@ -238,7 +238,7 @@ template<typename T,typename V, typename S> void btree<T,V,S>::addINF(S* nod, T 
 //			i++;
 			if(nod->child[i]!= nullptr){
 				if(nod->child[i]->full()){
-					split(nod, nod->child[i], i);
+					split(nod->child[i],nod, i);
 					if(k>nod->items[i]->key) i++;
 				}
 			}
@@ -255,7 +255,7 @@ cout<<"entered"<<endl;
 		root = neW;
 		root->leaf = false;
 		root->child[0] = r;
-		split(root, root->child[0], 0);
+		split(root->child[0],root, 0);
 		addINF(root, k,v);
 	}
 	else{
