@@ -9,10 +9,14 @@ std::vector<int> Deikstra::get(){
 	return long_ways;
 }
 void Deikstra::dik(size_t now){
+	if(ways[now].first)
+		return;
 	ways[now].first = true;
+	if(ways[now].second == (-1))
+		ways[now].second = 0;
 	for(size_t i = 0; i<gr[now].size(); i++){
 		if(!ways[gr[now][i][0]].first){
-			if(ways[gr[now][i][0]].second > (ways[now].second + gr[now][i][1]) || ways[gr[now][i][0]].second != (-1)){
+			if(ways[gr[now][i][0]].second > (ways[now].second + gr[now][i][1]) || ways[gr[now][i][0]].second == (-1)){
 				ways[gr[now][i][0]].second = ways[now].second + gr[now][i][1];
 			}
 		}
