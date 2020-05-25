@@ -10,7 +10,7 @@ int main(){
 	grr[0][0][1] = 5;
 	grr[0][1][0] = 4;
 	grr[0][1][1] = 10;
-cout<<"1\n";
+
 	grr[1].resize(2);
 	for(int i = 0; i<grr[1].size(); i++)
 		grr[1][i].resize(2);
@@ -18,7 +18,7 @@ cout<<"1\n";
 	grr[1][0][1] = 1;
 	grr[1][1][0] = 2;
 	grr[1][1][1] = 1;
-cout<<"2\n";
+
 	grr[2].resize(2);
 	for(int i = 0; i<grr[2].size(); i++)
 		grr[2][i].resize(2);
@@ -26,7 +26,7 @@ cout<<"2\n";
 	grr[2][0][1] = 1;
 	grr[2][1][0] = 4;
 	grr[2][1][1] = 7;
-cout<<"3\n";
+
 	grr[3].resize(4);
 	for(int i = 0; i<grr[3].size(); i++)
 		grr[3][i].resize(2);
@@ -38,7 +38,7 @@ cout<<"3\n";
 	grr[3][2][1] = 3;
 	grr[3][3][0] = 6;
 	grr[3][3][1] = 6;
-cout<<"4\n";
+
 	grr[4].resize(6);
 	for(int i = 0; i<grr[4].size(); i++)
 		grr[4][i].resize(2);
@@ -48,16 +48,13 @@ cout<<"4\n";
 	grr[4][1][1] = 7;
 	grr[4][2][0] = 5;
 	grr[4][2][1] = 2;
-cout<<"4.1\n";
 	grr[4][3][0] = 6;
 	grr[4][3][1] = 4;
 	grr[4][4][0] = 7;
-cout<<"4.2\n";
 	grr[4][4][1] = 1;
 	grr[4][5][0] = 3;
-cout<<"4.3\n";
 	grr[4][5][1] = 3;
-cout<<"5\n";
+
 	grr[5].resize(2);
 	for(int i = 0; i<grr[5].size(); i++)
 		grr[5][i].resize(2);
@@ -65,7 +62,7 @@ cout<<"5\n";
 	grr[5][0][1] = 15;
 	grr[5][1][0] = 4;
 	grr[5][1][1] = 2;
-cout<<"vde"<<endl;
+
 	grr[6].resize(2);
 	for(int i = 0; i<grr[6].size(); i++)
 		grr[6][i].resize(2);
@@ -92,12 +89,9 @@ cout<<"vde"<<endl;
 		std::cout<<std::endl;
 	}
 	kruskal kek;
-       	kek.make(grr, false);
-	cout<<"suka3\n";
+       	kek.make(grr);
 	kek.krask();
-	cout<<"suka2\n";
 	auto l = kek.get();
-	cout<<"suka\n";
 	for(auto i : l){
 		for (auto c:i)
 			std::cout<<c<<" ";
