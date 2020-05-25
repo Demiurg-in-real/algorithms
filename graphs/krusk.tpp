@@ -1,5 +1,5 @@
-void kruskal::make(std::vector<std::vector<std::vector<int>>> vect, bool bd){
-	bedirected = true;
+void kruskal::make(std::vector<std::vector<std::vector<int>>> vect){
+	bool bedirected = true;
 	for(size_t i = 0; i<vect.size(); i++){
 		for(size_t j = 0; j<vect[i].size(); j++){
 			for(size_t k = 0; k<vect[vect[i][j][0]].size(); k++){
