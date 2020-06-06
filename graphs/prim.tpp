@@ -65,7 +65,7 @@ void Prim::prim(){
 		low.first = 0;
 		low.second = 0;
 		for(w = 0; w<id.size(); w++){
-			if(id[w] == 0){
+			if(id[w] == 0 && gr[w].size() != 0){
 				for(e = 0; e<gr[w].size(); e++){
 					if(gr[low.first][low.second][1] > gr[w][e][1] && id[gr[w][e][0]] != 0){
 						low.first = w;
@@ -76,5 +76,28 @@ void Prim::prim(){
 		}
 		result.push_back(std::make_pair(low.first,gr[low.first][low.second][0]));
 		id[gr[low.first][low.second][0]] = 0;
+		gr[low.first].erase(gr[low.first].begin()+low.second);
+	}
+}
+const int inf = 1000000000;
+void prim(std::vector<std::vector<int>> matr, std::vector<int>& from,std::vector<int>& to){
+	std::vector<int> used(matr.size());
+	from.resize(0);
+	to.resize(0);
+	for(size_t i = 0; i<matr.size(); i++){
+		from.push_back(inf);
+		to.push_back(-1);
+	}
+	from[0] = 0;
+	for(size_t i = 0; i < matr.size(); i++){
+		size_t one = -1;
+		for(size_t j = 0; j<matr.size(); j++)
+			if(!used[j] && (one == -1 || from[j] < from[one]))
+				one = j;
+		for(size_t j = 0; j < matr.size(); j++)
+			if(matr[one][j] < from[j]){
+				from[j] = matr[one][j];
+				to[j] = one;
+			}
 	}
 }
