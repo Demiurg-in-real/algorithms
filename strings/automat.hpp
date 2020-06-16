@@ -3,7 +3,7 @@
 #include<vector>
 #include<string>
 #include "prefix.hpp"
-#include "avl/avl.h"
+#include "avl/avl.hpp"
 namespace ALGS{
 	class automat{
 		private:
