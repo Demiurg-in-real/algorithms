@@ -33,6 +33,7 @@ namespace AVL{
 			tree<K,V>& operator=(const tree<K,V>& rete);
 			V operator[](K key);
 			void delete_item(K key);
+			tree();
 			tree(K key, V value);
 			tree(const tree<K,V> &sec);
 			~tree();

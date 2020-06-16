@@ -2,7 +2,11 @@ template<class K, class V, typename M>
 tree<K,V,M>::tree(K key, V value){
 	root = new M(key, value);
 }
-
+template<class K, class V, typename M> 
+tree<K,V,M>::tree(){
+	root = new M(K(), V());
+	clear_all();
+}
 template<class K, class V, typename M> 
 tree<K,V>& tree<K,V,M>::operator=(const tree<K,V>& rete){ 
 	clear_all();
@@ -45,7 +49,7 @@ template<class K, class V, typename M>
 V tree<K,V,M>::operator[](K key){ 
 	M* kr = search(root,key);
 	if(kr != nullptr) return kr->value;
-//	exit(-1);
+	else return V();
 }
 
 template<class K, class V, typename M> 
